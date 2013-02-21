@@ -21,12 +21,16 @@
 }
 
 +(void) addProfiler:(Class) target andSelector:(SEL) selector {
-    [TheWrapper addWrappertoClass:target andSelector:selector withPreRunBlock:^(id<NSObject> zelf, id firstArg, ...) {
+    id preBlock = ^(id<NSObject> zelf, id firstArg, ...) {
         [ProfilingService startTimer:[NanoProfiler getTimerNameForClass:target andSelector:selector]];
-    } andPostRunBlock:^id(id<NSObject> zelf, id functionReturnValue, id firstArg, ...) {
+    };
+
+    id postBlock = ^id(id<NSObject> zelf, id functionReturnValue, id firstArg, ...) {
         [ProfilingService stopTimer:[NanoProfiler getTimerNameForClass:target andSelector:selector]];
         return functionReturnValue;
-    }];
+    };
+
+    [TheWrapper addWrappertoClass:target andSelector:selector withPreRunBlock:preBlock andPostRunBlock:postBlock];
 }
 
 @end
