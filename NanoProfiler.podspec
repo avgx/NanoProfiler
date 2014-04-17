@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.requires_arc = false
   s.source_files = 'src/*.{h,m}'
-  s.source = { :git => 'git://github.com/itimofeev/NanoProfiler.git', :branch => 'vargs' }
+  s.source = { :git => 'git://github.com/itimofeev/NanoProfiler.git', :branch => 'master' }
   s.dependency 'theWrapper'
 end
